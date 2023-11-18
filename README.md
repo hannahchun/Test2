@@ -4,7 +4,7 @@
 ## How to Compile and Run
 
 ### In Eclipse
-File → Import → Existing Projects into Workspace → Next → Select archive file → Browse → Choose HW4_RFAE.zip → Finish -> Run -> Run Configurations -> Select Arguments tab
+File → Import → Existing Projects into Workspace → Next → Select archive file → Browse → Choose HW3_RFAE.zip → Finish -> Run -> Run Configurations -> Select Arguments tab
 
 #### Enable only parser
 ex1. -p "{with {fac {fun {n} {if {= n 0} 1 {* n {fac {- n 1}}}}}} {fac 4}}"
