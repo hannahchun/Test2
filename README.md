@@ -89,7 +89,7 @@ Desugared into\
 Parsing Result\
 (app (fun 'mk-rec (app (fun 'fac (app (id 'fac) (num 4))) (app (id 'mk-rec) (fun 'fac (fun 'n (ifexp (eqop (id 'n) (num 0)) (num 1) (mul (id 'n) (app (id 'fac) (sub (id 'n) (num 1)))))))))) (fun 'body-proc (app (fun 'fX (app (id 'fX) (id 'fX))) (fun 'fY (app (fun 'f (app (id 'body-proc) (id 'f))) (fun 'x (app (app (id 'fY) (id 'fY)) (id 'x))))))))
 
-ex2. "{with {fib {fun {n} {if {or {= n 0} {= n 1}} 1 {+ {fib {- n 1}} {fib {- n 2}}}}}} {fib 10}}"
+ex2. {with {fib {fun {n} {if {or {= n 0} {= n 1}} 1 {+ {fib {- n 1}} {fib {- n 2}}}}}} {fib 10}}
 
 Desugared into\
 {with {mk-rec {fun {body-proc} {with {fX {fun {fY} {with {f {fun {x} {{fY fY} x}}} {body-proc f}}}} {fX fX}}}} {with {fib {mk-rec {fun {fib} {fun {n} {if {or {= n 0} {= n 1}} 1 {+ {fib {- n 1}} {fib {- n 2}}}}}}}} {fib 10}}}
@@ -97,7 +97,7 @@ Desugared into\
 Parsing Result\
 (app (fun 'mk-rec (app (fun 'fib (app (id 'fib) (num 10))) (app (id 'mk-rec) (fun 'fib (fun 'n (ifexp (orop (eqop (id 'n) (num 0)) (eqop (id 'n) (num 1))) (num 1) (add (app (id 'fib) (sub (id 'n) (num 1))) (app (id 'fib) (sub (id 'n) (num 2)))))))))) (fun 'body-proc (app (fun 'fX (app (id 'fX) (id 'fX))) (fun 'fY (app (fun 'f (app (id 'body-proc) (id 'f))) (fun 'x (app (app (id 'fY) (id 'fY)) (id 'x))))))))
 
-ex3. "{with {count {fun {n} {if {= n 0} 0 {+ 1 {count {- n 1}}}}}} {count 8}}"
+ex3. {with {count {fun {n} {if {= n 0} 0 {+ 1 {count {- n 1}}}}}} {count 8}}
 
 Desugared into\
 {with {mk-rec {fun {body-proc} {with {fX {fun {fY} {with {f {fun {x} {{fY fY} x}}} {body-proc f}}}} {fX fX}}}} {with {count {mk-rec {fun {count} {fun {n} {if {= n 0} 0 {+ 1 {count {- n 1}}}}}}}} {count 8}}}
