@@ -109,6 +109,7 @@ Parsing Result\
 **not recursion examples**
 
 ex1. {with {x 3} {with {f {fun {y} {+ x y}}} {with {x 5} {f 4}}}}
+
 Parsing Result\
 (app (fun 'x (app (fun 'f (app (fun 'x (app (id 'f) (num 4))) (num 5))) (fun 'y (add (id 'x) (id 'y))))) (num 3))
 
@@ -116,6 +117,7 @@ Interpreting Result\
 (numV 7)
 
 ex2. {with {z {fun {x} {+ x y}}} {with {y 10} z}}
+
 Parsing Result\
 (app (fun 'z (app (fun 'y (id 'z)) (num 10))) (fun 'x (add (id 'x) (id 'y))))
 
