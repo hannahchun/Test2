@@ -73,15 +73,15 @@ ex1. java -cp bin edu/handong/csee/plt/Main "{with {fac {fun {n} {if {= n 0} 1 {
             | <id.>\
             | {fun {<id.> <RFAE.>}}\
             | {<RFAE.> <RFAE.>}\
-            | {ifexp <RFAE> <RFAE> <RFAE>}\
-            | {orop <RFAE> <RFAE>}\
-            | {eqop <RFAE> <RFAE>}
+            | {ifexp <RFAE.> <RFAE.> <RFAE.>}\
+            | {orop <RFAE.> <RFAE.>}\
+            | {eqop <RFAE.> <RFAE.>}
 
 ##  Testcase
 
 **recursion examples**
 
-ex1. {with {fac {fun {n} {if {= n 0} 1 {* n {fac {- n 1}}}}}} {fac 4}}\
+ex1. {with {fac {fun {n} {if {= n 0} 1 {* n {fac {- n 1}}}}}} {fac 4}}
 
 Desugared into\
 {with {mk-rec {fun {body-proc} {with {fX {fun {fY} {with {f {fun {x} {{fY fY} x}}} {body-proc f}}}} {fX fX}}}} {with {fac {mk-rec {fun {fac} {fun {n} {if {= n 0} 1 {* n {fac {- n 1}}}}}}}} {fac 4}}}
@@ -89,7 +89,7 @@ Desugared into\
 Parsing Result\
 (app (fun 'mk-rec (app (fun 'fac (app (id 'fac) (num 4))) (app (id 'mk-rec) (fun 'fac (fun 'n (ifexp (eqop (id 'n) (num 0)) (num 1) (mul (id 'n) (app (id 'fac) (sub (id 'n) (num 1)))))))))) (fun 'body-proc (app (fun 'fX (app (id 'fX) (id 'fX))) (fun 'fY (app (fun 'f (app (id 'body-proc) (id 'f))) (fun 'x (app (app (id 'fY) (id 'fY)) (id 'x))))))))
 
-ex2. "{with {fib {fun {n} {if {or {= n 0} {= n 1}} 1 {+ {fib {- n 1}} {fib {- n 2}}}}}} {fib 10}}"\
+ex2. "{with {fib {fun {n} {if {or {= n 0} {= n 1}} 1 {+ {fib {- n 1}} {fib {- n 2}}}}}} {fib 10}}"
 
 Desugared into\
 {with {mk-rec {fun {body-proc} {with {fX {fun {fY} {with {f {fun {x} {{fY fY} x}}} {body-proc f}}}} {fX fX}}}} {with {fib {mk-rec {fun {fib} {fun {n} {if {or {= n 0} {= n 1}} 1 {+ {fib {- n 1}} {fib {- n 2}}}}}}}} {fib 10}}}
@@ -97,7 +97,7 @@ Desugared into\
 Parsing Result\
 (app (fun 'mk-rec (app (fun 'fib (app (id 'fib) (num 10))) (app (id 'mk-rec) (fun 'fib (fun 'n (ifexp (orop (eqop (id 'n) (num 0)) (eqop (id 'n) (num 1))) (num 1) (add (app (id 'fib) (sub (id 'n) (num 1))) (app (id 'fib) (sub (id 'n) (num 2)))))))))) (fun 'body-proc (app (fun 'fX (app (id 'fX) (id 'fX))) (fun 'fY (app (fun 'f (app (id 'body-proc) (id 'f))) (fun 'x (app (app (id 'fY) (id 'fY)) (id 'x))))))))
 
-ex3. "{with {count {fun {n} {if {= n 0} 0 {+ 1 {count {- n 1}}}}}} {count 8}}"\
+ex3. "{with {count {fun {n} {if {= n 0} 0 {+ 1 {count {- n 1}}}}}} {count 8}}"
 
 Desugared into\
 {with {mk-rec {fun {body-proc} {with {fX {fun {fY} {with {f {fun {x} {{fY fY} x}}} {body-proc f}}}} {fX fX}}}} {with {count {mk-rec {fun {count} {fun {n} {if {= n 0} 0 {+ 1 {count {- n 1}}}}}}}} {count 8}}}
@@ -107,14 +107,15 @@ Parsing Result\
 
 
 **not recursion examples**
-ex1. {with {x 3} {with {f {fun {y} {+ x y}}} {with {x 5} {f 4}}}}\
+
+ex1. {with {x 3} {with {f {fun {y} {+ x y}}} {with {x 5} {f 4}}}}
 Parsing Result\
 (app (fun 'x (app (fun 'f (app (fun 'x (app (id 'f) (num 4))) (num 5))) (fun 'y (add (id 'x) (id 'y))))) (num 3))
 
 Interpreting Result\
 (numV 7)
 
-ex2. {with {z {fun {x} {+ x y}}} {with {y 10} z}}\
+ex2. {with {z {fun {x} {+ x y}}} {with {y 10} z}}
 Parsing Result\
 (app (fun 'z (app (fun 'y (id 'z)) (num 10))) (fun 'x (add (id 'x) (id 'y))))
 
